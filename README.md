@@ -1,61 +1,59 @@
-# MyApp
+# Bài tập Slug Fashion
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.2.
+Angular + Express + MongoDB. Danh sách Fashion được bổ sung ngay bên dưới bài Slug sản phẩm tại `/products`.
 
-## Development server
+## Chức năng
 
-From the `my-app` directory, start the development server with:
+- Mỗi Fashion có `IdF` là số nguyên dương, tự cấp bằng bộ đếm MongoDB và unique index.
+- Slug dùng lại `SlugHelper.ts`: `ten-fashion-p12`, bỏ dấu tiếng Việt kể cả đ.
+- Trang chi tiết phân tích IdF cuối slug và gọi API để lấy đúng Fashion, kể cả trùng tên.
+- Danh sách và chi tiết hỗ trợ màn hình nhỏ, trạng thái tải và thông báo lỗi.
 
-```bash
+## Cấu trúc
+
+- `src/`, `public/` và các file cấu hình ở thư mục gốc: frontend my-app.
+- `my-server-mongodb/`: backend Fashion.
+- `my-server-mongodb/data/fashions.json`: 12 Fashion mẫu, kèm ảnh.
+- Không cần tải thư mục bài 18 để chạy bài Slug.
+
+## Chạy bài
+
+Cài Node.js 22.12+ nhánh 22 hoặc Node.js 24 và MongoDB đang chạy ở `mongodb://127.0.0.1:27017`.
+
+Terminal 1, tại thư mục repository:
+
+```powershell
+cd my-server-mongodb
+npm ci
+node seed.js
 npm start
 ```
 
-This runs `ng serve --open`, which opens the app in your default browser at `http://localhost:4200/`. To start it manually, use `ng serve -o`. The development server watches source files and rebuilds/reloads the page when they change.
+Seed chỉ thêm Fashion chưa có IdF, giữ nguyên dữ liệu đã tồn tại. Server tự bổ sung IdF còn thiếu và tạo ràng buộc không trùng khi khởi động. Có thể cấu hình `MONGODB_URI` và `MONGODB_DB` bằng biến môi trường.
 
-## Code scaffolding
+Terminal 2, tại thư mục repository:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```powershell
+npm ci
+npm start
 ```
 
-Generating a component rebuilds the app, but to display it you must also use it in a template or add a route to it.
+Mở **http://localhost:4200/products#fashion-slug** (hoặc Chapter 4 → Bài Slug - Fashion). Chọn slug trong bảng Fashion để xem chi tiết. Frontend phải chạy qua Angular dev server để dùng proxy tới cổng 3002.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Các bài Books cũ cần server sách riêng; không cần server sách để chạy bài Slug Fashion. Dữ liệu đăng nhập không nằm trong bản nộp này.
 
-```bash
-ng generate --help
+## Kiểm tra
+
+```powershell
+npm run build
+npx ng test --watch=false --include=src/app/classes/SlugHelper.spec.ts --include=src/app/fashion-detail-component/fashion-detail-component.spec.ts --include=src/app/fashion-detail-component/slug-integration.spec.ts
 ```
 
-## Building
+## Các file chính
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- `src/app/classes/Fashion.ts`, `SlugHelper.ts`
+- `src/app/fashion-component/`, `fashion-detail-component/`
+- `src/app/product-list-advanced-component/`: bài Slug sản phẩm nối thêm Fashion.
+- `src/app/services/fashion-apiservice.ts`
+- `src/proxy.conf.json`: tách API fake-products khỏi route products.
+- `my-server-mongodb/index.js`, `fashion-identity.js`, `seed.js`

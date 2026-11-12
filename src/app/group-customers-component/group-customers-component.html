@@ -1,0 +1,36 @@
+<main>
+  <h1>Bài 18 - Json Array Model – Group Customers</h1>
+  <p *ngIf="loading()" role="status">Đang tải danh sách khách hàng...</p>
+  <div *ngIf="errMessage()" role="alert" class="error-message">
+    <p>{{ errMessage() }}</p>
+    <button type="button" (click)="loadCustomers()">Thử lại</button>
+  </div>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Age</th>
+          <th scope="col">#</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let group of groups()">
+        <tr>
+          <th colspan="5" scope="rowgroup" class="group-heading">
+            {{ group.CustomerTypeId }} - {{ group.CustomerTypeName }}
+          </th>
+        </tr>
+        <tr *ngFor="let customer of group.Customers">
+          <td>{{ customer.Id }}</td>
+          <td>{{ customer.Name }}</td>
+          <td>{{ customer.Email }}</td>
+          <td>{{ customer.Age }}</td>
+          <td><img [src]="customer.Image" [alt]="customer.Name" width="150" height="150" /></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p *ngIf="!loading() && !errMessage() && groups().length === 0">Chưa có khách hàng.</p>
+</main>

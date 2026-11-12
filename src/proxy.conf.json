@@ -1,0 +1,7 @@
+{
+  "/api/fake-products": { "target": "https://fakestoreapi.com", "secure": true, "changeOrigin": true, "pathRewrite": { "^/api/fake-products": "/products" } },
+  "/api/books": { "target": "http://localhost:3000", "secure": false },
+  "/image": { "target": "http://localhost:3000", "secure": false },
+  "/fashions": { "target": "http://localhost:3002", "secure": false },
+  "/user-login": { "target": "http://localhost:3002", "secure": false }
+}

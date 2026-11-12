@@ -1,0 +1,47 @@
+.book-editor {
+  padding: 4px;
+}
+
+.book-fields {
+  display: grid;
+  grid-template-columns: 86px minmax(220px, 328px);
+  align-items: center;
+  gap: 2px 4px;
+  max-width: 420px;
+}
+
+.book-fields label {
+  white-space: nowrap;
+}
+
+.book-table {
+  border-collapse: collapse;
+}
+
+.book-table th,
+.book-table td {
+  border: 1px solid #aaa;
+  padding: 2px;
+}
+
+.book-table th {
+  font-weight: 400;
+  text-align: left;
+}
+
+.book-table tbody tr {
+  cursor: pointer;
+}
+
+.book-table tbody tr:hover {
+  background: #f2f2f2;
+}
+
+.book-table img {
+  display: block;
+  object-fit: contain;
+}
+
+.book-error {
+  color: #b00020;
+}

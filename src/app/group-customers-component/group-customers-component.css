@@ -1,0 +1,9 @@
+main { padding: 24px 16px; }
+h1 { font-size: 22px; margin-bottom: 20px; text-align: center; }
+.table-scroll { overflow-x: auto; }
+table { margin: 0 auto; border: 1px solid #808080; border-collapse: separate; border-spacing: 2px; font-family: Arial, sans-serif; font-size: 14px; }
+th, td { border: 1px solid #999; padding: 2px; vertical-align: middle; }
+thead th { text-align: center; }
+.group-heading { font-weight: normal; text-align: left; }
+img { display: block; object-fit: cover; }
+.error-message { color: #a51d20; text-align: center; }

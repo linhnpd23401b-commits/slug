@@ -1,0 +1,23 @@
+.book-table {
+  border-collapse: collapse;
+}
+
+.book-table th,
+.book-table td {
+  border: 1px solid #aaa;
+  padding: 2px;
+}
+
+.book-table th {
+  font-weight: 400;
+  text-align: left;
+}
+
+.book-table img {
+  display: block;
+  object-fit: contain;
+}
+
+.book-error {
+  color: #b00020;
+}

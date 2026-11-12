@@ -1,0 +1,93 @@
+<section class="book-new">
+  @if (errMessage()) {
+    <p class="book-message book-message-error" role="alert">{{ errMessage() }}</p>
+  }
+
+  <form #bookForm="ngForm" (ngSubmit)="postBook(bookForm)" novalidate>
+    <div class="book-fields">
+      <label for="BookId">Book Id:</label>
+      <input
+        id="BookId"
+        type="text"
+        name="BookId"
+        class="form-control"
+        placeholder="Enter Book Id"
+        [(ngModel)]="book.BookId"
+        required
+      />
+
+      <label for="BookName">Book Name:</label>
+      <input
+        id="BookName"
+        type="text"
+        name="BookName"
+        class="form-control"
+        placeholder="Enter Book Name"
+        [(ngModel)]="book.BookName"
+        required
+      />
+
+      <label for="BookPrice">Price:</label>
+      <input
+        id="BookPrice"
+        type="number"
+        name="BookPrice"
+        class="form-control"
+        placeholder="Enter Price"
+        [(ngModel)]="book.Price"
+        min="0"
+        required
+      />
+
+      <label for="Image">Image:</label>
+      <input
+        id="Image"
+        type="file"
+        name="Image"
+        class="form-control"
+        accept="image/*"
+        (change)="onFileSelected($event)"
+      />
+    </div>
+
+    <button class="submit-button" type="submit" [disabled]="isSubmitting()">
+      {{ isSubmitting() ? 'Submitting...' : 'Submit' }}
+    </button>
+  </form>
+
+  <div class="book-table-wrapper">
+    <table class="book-table">
+      <thead>
+        <tr>
+          <th>Book Id</th>
+          <th>BookName</th>
+          <th>Price</th>
+          <th>Image</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of books(); track item.BookId) {
+          <tr>
+            <td>{{ item.BookId }}</td>
+            <td>{{ item.BookName }}</td>
+            <td>{{ item.Price }}</td>
+            <td>
+              @if (item.Image) {
+                <img
+                  [src]="serverImagesLink + '/' + item.Image"
+                  [alt]="item.BookName"
+                  width="50"
+                  height="50"
+                />
+              }
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="4">Not found books</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

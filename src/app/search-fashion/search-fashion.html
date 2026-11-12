@@ -1,0 +1,115 @@
+<main class="search-page">
+  <header class="page-heading">
+    <p class="eyebrow">FASHION CATALOG</p>
+    <h1>SearchFashion</h1>
+    <p class="page-description">
+      Tìm kiếm thiết kế theo nội dung và khám phá những phong cách tương tự.
+    </p>
+  </header>
+
+  <section class="search-panel" aria-label="Tìm kiếm Fashion">
+    <div class="search-panel-heading">
+      <div>
+        <h2>Tìm kiếm</h2>
+        <p>Nhập từ khóa, chọn trường dữ liệu và số kết quả muốn xem.</p>
+      </div>
+      <span class="catalog-count">{{ fashions.length }} thiết kế</span>
+    </div>
+
+    <div class="search-controls">
+      <label class="form-group keyword-group">
+        <span>Từ khóa</span>
+        <input
+          type="search"
+          [(ngModel)]="keyword"
+          (input)="onSearch()"
+          placeholder="Ví dụ: floral, casual, summer..."
+          aria-label="Từ khóa tìm kiếm"
+        />
+      </label>
+
+      <label class="form-group">
+        <span>Tìm theo</span>
+        <select [(ngModel)]="searchField" (change)="onSearch()">
+          <option value="fashion_subject">fashion_subject</option>
+          <option value="fashion_detail">fashion_detail</option>
+        </select>
+      </label>
+
+      <label class="form-group">
+        <span>Số kết quả</span>
+        <select [(ngModel)]="limit" (change)="onSearch()">
+          <option [ngValue]="5">5 kết quả</option>
+          <option [ngValue]="10">10 kết quả</option>
+          <option [ngValue]="20">20 kết quả</option>
+          <option [ngValue]="100">Tất cả</option>
+        </select>
+      </label>
+
+      <button type="button" class="btn-search" (click)="onSearch()">
+        Tìm kiếm
+      </button>
+    </div>
+  </section>
+
+  <section class="results-section" aria-label="Kết quả tìm kiếm">
+    <div class="results-heading">
+      <div>
+        <h2>Kết quả Fashion</h2>
+        <p>
+          {{ filteredFashions.length }} kết quả
+          <span *ngIf="keyword.trim()">cho “{{ keyword.trim() }}”</span>
+        </p>
+      </div>
+      <div class="score-legend" aria-label="Chú giải độ tương đồng">
+        <span><i class="legend-dot dot-pink"></i>0.75–1.00</span>
+        <span><i class="legend-dot dot-yellow"></i>0.50–0.74</span>
+        <span><i class="legend-dot dot-gray"></i>&lt; 0.50</span>
+      </div>
+    </div>
+
+    <p *ngIf="loading" class="status-message" role="status">Đang tải dữ liệu Fashion...</p>
+    <p *ngIf="errorMessage" class="status-message error-message" role="alert">
+      {{ errorMessage }}
+    </p>
+
+    <div class="table-scroll" *ngIf="!loading && !errorMessage">
+      <table class="fashion-table">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Style</th>
+            <th scope="col">fashion_subject</th>
+            <th scope="col">fashion_detail</th>
+            <th scope="col">Image</th>
+            <th scope="col">Jaccard Similarity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let fashion of filteredFashions" [ngClass]="getRowClass(fashion.jaccardScore)">
+            <td class="id-cell">{{ fashion._id?.$oid || fashion._id }}</td>
+            <td>{{ fashion.style }}</td>
+            <td class="subject-cell">{{ fashion.fashion_subject }}</td>
+            <td class="detail-cell">{{ fashion.fashion_detail }}</td>
+            <td class="image-cell">
+              <img
+                *ngIf="fashion.fashion_image"
+                [src]="fashion.fashion_image"
+                [alt]="fashion.fashion_subject || 'Fashion'"
+                class="thumb-img"
+                loading="lazy"
+              />
+              <span *ngIf="!fashion.fashion_image" class="no-image">No image</span>
+            </td>
+            <td class="score-cell">{{ fashion.jaccardScore | number: '1.2-4' }}</td>
+          </tr>
+          <tr *ngIf="filteredFashions.length === 0">
+            <td colspan="6" class="empty-state">
+              Không tìm thấy dữ liệu phù hợp.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>

@@ -1,0 +1,56 @@
+.book-new {
+  padding: 4px;
+}
+
+.book-fields {
+  display: grid;
+  grid-template-columns: 86px minmax(220px, 328px);
+  align-items: center;
+  gap: 2px 4px;
+  max-width: 420px;
+}
+
+.book-fields label {
+  white-space: nowrap;
+}
+
+.book-fields .form-control {
+  min-width: 0;
+}
+
+.submit-button {
+  margin-top: 3px;
+}
+
+.book-table-wrapper {
+  max-width: max-content;
+  overflow-x: auto;
+}
+
+.book-table {
+  border-collapse: collapse;
+}
+
+.book-table th,
+.book-table td {
+  border: 1px solid #aaa;
+  padding: 2px;
+}
+
+.book-table th {
+  font-weight: 400;
+  text-align: left;
+}
+
+.book-table img {
+  display: block;
+  object-fit: contain;
+}
+
+.book-message {
+  margin: 0 0 6px;
+}
+
+.book-message-error {
+  color: #b00020;
+}

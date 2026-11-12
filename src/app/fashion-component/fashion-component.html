@@ -1,0 +1,21 @@
+<main class="fashion-page">
+  <header><div><p class="eyebrow">THE FASHION EDIT</p><h1>Khám phá phong cách</h1><p>Bộ sưu tập thời trang — chọn một thiết kế để xem câu chuyện chi tiết.</p></div><a class="button" routerLink="/fashion-new">+ Thêm Fashion</a></header>
+  <p *ngIf="loading()" role="status">Đang tải bộ sưu tập...</p>
+  <p *ngIf="errMessage()" class="error" role="alert">{{ errMessage() }}</p>
+  <section class="catalog" *ngIf="!loading() && !errMessage()">
+    <div class="catalog-heading"><h2>Danh sách Fashion</h2><span>{{ fashions().length }} thiết kế</span></div>
+    <div class="table-scroll"><table>
+      <thead><tr><th>IdF</th><th>Thiết kế</th><th>Phong cách</th><th>Slug / Chi tiết</th></tr></thead>
+      <tbody>
+        @for (fashion of fashions(); track fashion._id) {
+          <tr>
+            <td class="identity">#{{ fashion.IdF }}</td>
+            <td><a class="design" [routerLink]="['/fashion-detail', generateSlug(fashion.fashion_subject, fashion.IdF)]"><img *ngIf="fashion.fashion_image" [src]="fashion.fashion_image" [alt]="fashion.fashion_subject" loading="lazy"><span>{{ fashion.fashion_subject }}</span></a></td>
+            <td><span class="tag">{{ fashion.style || 'Fashion' }}</span></td>
+            <td><a class="slug" [routerLink]="['/fashion-detail', generateSlug(fashion.fashion_subject, fashion.IdF)]">{{ generateSlug(fashion.fashion_subject, fashion.IdF) }} <span aria-hidden="true">↗</span></a></td>
+          </tr>
+        } @empty { <tr><td colspan="4">Chưa có thiết kế nào.</td></tr> }
+      </tbody>
+    </table></div>
+  </section>
+</main>

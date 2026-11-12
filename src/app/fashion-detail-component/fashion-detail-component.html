@@ -1,0 +1,20 @@
+<main class="detail-page">
+  <a class="back" routerLink="/products" fragment="fashion-slug">← Trở về bài Slug - Product & Fashion</a>
+  <p *ngIf="loading()" role="status">Đang tải Fashion...</p>
+  <div *ngIf="error()" class="error" role="alert"><h1>Không thể mở thiết kế</h1><p>{{ error() }}</p></div>
+  @if (fashion(); as item) {
+    <article class="detail">
+      <div class="visual"><img *ngIf="item.fashion_image; else noImage" [src]="item.fashion_image" [alt]="item.fashion_subject"><ng-template #noImage><span>Chưa có hình ảnh</span></ng-template></div>
+      <div class="information">
+        <p class="eyebrow">THE FASHION EDIT / #{{ item.IdF }}</p>
+        <span class="tag">{{ item.style || 'Fashion' }}</span>
+        <h1>{{ item.fashion_subject }}</h1>
+        <div class="divider"></div>
+        <h2>Chi tiết thiết kế</h2>
+        <p class="description">{{ item.fashion_detail || 'Chưa có mô tả cho thiết kế này.' }}</p>
+        <dl><div><dt>IdF</dt><dd>{{ item.IdF }}</dd></div><div><dt>Phong cách</dt><dd>{{ item.style || 'Fashion' }}</dd></div></dl>
+        <a class="button" routerLink="/products" fragment="fashion-slug">Khám phá thêm thiết kế →</a>
+      </div>
+    </article>
+  }
+</main>
